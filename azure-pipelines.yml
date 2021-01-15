@@ -44,24 +44,24 @@ steps:
 #     platform: '$(BuildPlatform)'
 #     configuration: '$(BuildConfiguration)'
 
-# - task: DotNetCoreCLI@2
-#   displayName: dotnet test
-#   inputs:
-#     command: 'test'
-#     projects: './12142020_MvcRpsDemo.Tests/12142020_MvcRpsDemo.Tests.csproj'
-#     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
-
-- task: VSTest@2
-  displayName: 'Testing with VSTest@2'
+- task: DotNetCoreCLI@2
+  displayName: dotnet test
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*Tests*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    codeCoverageEnabled: true
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
+    command: 'test'
+    projects: './12142020_MvcRpsDemo.Tests/12142020_MvcRpsDemo.Tests.csproj'
+    arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
+
+# - task: VSTest@2
+#   displayName: 'Testing with VSTest@2'
+#   inputs:
+#     testSelector: 'testAssemblies'
+#     testAssemblyVer2: |
+#       **\*Tests*.dll
+#       !**\*TestAdapter.dll
+#       !**\obj\**
+#     codeCoverageEnabled: true
+#     platform: '$(BuildPlatform)'
+#     configuration: '$(BuildConfiguration)'
 
 - task: PublishCodeCoverageResults@1
   displayName: publish code coverage
