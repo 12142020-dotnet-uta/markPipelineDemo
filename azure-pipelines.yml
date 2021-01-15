@@ -9,11 +9,91 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  buildConfiguration: 'Release'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+steps:
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    version: 5.0.x
+    performMultiLevelLookup: true
+    includePreviewVersions: true # Required for preview versions
+
+#restore will also restore the NuGet packages.
+# 'BuildConfiguration' is an internal recreated variable?
+
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'restore'
+#     feedsToUse: 'select'
+#     vstsFeed: 'my-vsts-feed' # A series of numbers and letters
+
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: '**/*.sln'
+    arguments: '--configuration $(buildConfiguration)' # Update this to match your need
+
+- task: SonarCloudAnalyze@1
+
+# do this after other tasks such as building
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+  
+# do this after your tests have run
+# - script: dotnet test ./12142020_MvcRpsDemo.sln --logger trx
+# - task: PublishTestResults@2
+#   condition: succeededOrFailed()
+#   inputs:
+#     testRunner: VSTest
+#     testResultsFiles: '**/*.trx'
+
+# do this after other tasks such as building
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: test
+#     projects: '**/*Tests/*.csproj'
+#     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
+# - task: PublishCodeCoverageResults@1
+#   inputs:
+#     codeCoverageTool: 'Cobertura'
+#     summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
+
+# - task: SonarCloudAnalyze@1
+#   displayName: run code analysis
+  
+# - task: SonarCloudPublish@1
+#   displayName: publish code analysis
+
+# - task: DotNetCoreCLI@2
+#   displayName: 'dotnet publish and zip'
+#   inputs:
+#     command: 'publish'
+#     publishWebProjects: true
+#     zipAfterPublish: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
