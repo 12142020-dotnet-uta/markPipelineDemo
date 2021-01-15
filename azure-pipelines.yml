@@ -106,6 +106,14 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'batch12142020'
+    organization: 'batch12142020'
+    scannerMode: 'MSBuild'
+    projectKey: 'batch12142020_12142020PipeLineDemo'
+    projectName: '12142020PipeLineDemo'
+
 - task: SonarCloudAnalyze@1
   displayName: run code analysis
   
