@@ -18,7 +18,8 @@ steps:
   inputs:
     version: 5.0.x
     performMultiLevelLookup: true
-    includePreviewVersions: true # Required for preview versions
+    includePreviewVersions: true 
+    # Required for preview versions
 
 #restore will also restore the NuGet packages.
 # 'BuildConfiguration' is an internal recreated variable?
