@@ -219,6 +219,8 @@ namespace BusinessLogicLayer
 			int y = 0;
 			y += x;
 			x = x * x;
+			y = x / x;
+			x = y;
 			return x;
 			// Convert the MatchViewModel into a Match
 
