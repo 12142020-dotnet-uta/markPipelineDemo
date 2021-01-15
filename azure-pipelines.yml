@@ -37,37 +37,12 @@ steps:
     projects: '**/*.sln'
     arguments: '--configuration $(buildConfiguration)' # Update this to match your need
 
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'batch12142020'
-    organization: 'batch12142020'
-    scannerMode: 'MSBuild'
-    projectKey: 'batch12142020_12142020PipeLineDemo'
-    projectName: '12142020PipeLineDemo'
-
-- task: SonarCloudAnalyze@1
-
-# do this after other tasks such as building
 - task: DotNetCoreCLI@2
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
-  
-# do this after your tests have run
-- script: dotnet test ./12142020_MvcRpsDemo.sln --logger trx
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+    arguments: --configuration $(buildConfiguration)' --collect "Code Coverage"
 
-#do this after other tasks such as building
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
 - task: PublishCodeCoverageResults@1
   inputs:
@@ -76,16 +51,43 @@ steps:
 
 - task: SonarCloudAnalyze@1
   displayName: run code analysis
-  
+
 - task: SonarCloudPublish@1
   displayName: publish code analysis
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet publish and zip'
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    zipAfterPublish: true
+# - task: DotNetCoreCLI@2
+#   displayName: 'dotnet publish and zip'
+#   inputs:
+#     command: 'publish'
+#     publishWebProjects: true
+#     zipAfterPublish: true
+
+
+
+
+
+
+
+
+
+
+
+# - task: SonarCloudPrepare@1
+#   inputs:
+#     SonarCloud: 'batch12142020'
+#     organization: 'batch12142020'
+#     scannerMode: 'MSBuild'
+#     projectKey: 'batch12142020_12142020PipeLineDemo'
+#     projectName: '12142020PipeLineDemo'
+
+
+# do this after your tests have run
+# - script: dotnet test ./12142020_MvcRpsDemo.sln --logger trx
+# - task: PublishTestResults@2
+#   condition: succeededOrFailed()
+#   inputs:
+#     testRunner: VSTest
+#     testResultsFiles: '**/*.trx'
 
 
 
