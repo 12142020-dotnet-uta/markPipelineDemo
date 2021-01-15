@@ -18,7 +18,7 @@ steps:
     SonarCloud: 'batch12142020'
     organization: 'batch12142020'
     scannerMode: 'MSBuild'
-    projectKey: 'batch12142020_12142020PipeLineDemo'
+    projectKey: 'bab7310717959427ff06cf0768ff6f93fb0c21d2'
     projectName: '12142020PipeLineDemo'
     extraProperties: |
         sonar.exclusions=**/lib/**
