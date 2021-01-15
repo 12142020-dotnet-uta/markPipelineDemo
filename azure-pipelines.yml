@@ -24,18 +24,18 @@ steps:
 #restore will also restore the NuGet packages.
 # 'BuildConfiguration' is an internal recreated variable?
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'restore'
-    feedsToUse: 'select'
-    vstsFeed: 'my-vsts-feed' # A series of numbers and letters
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'restore'
+#     feedsToUse: 'select'
+#     vstsFeed: 'my-vsts-feed' # A series of numbers and letters
 
 
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: build
-    projects: '**/*.sln'
+    projects: './12142020_MvcRpsDemo/12142020_MvcRpsDemo.sln'
     arguments: '--configuration $(buildConfiguration)' # Update this to match your need
 
 - task: DotNetCoreCLI@2
