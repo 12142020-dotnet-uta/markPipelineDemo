@@ -20,12 +20,14 @@ steps:
 #     version: '5.0.x'
 #     performMultiLevelLookup: true
 
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: build
-    projects: './12142020_MvcRpsDemo/12142020_MvcRpsDemo.sln'
-    arguments: '--configuration $(buildConfiguration)'
+- script: dotnet build ./Milestone3 --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+# - task: DotNetCoreCLI@2
+#   displayName: Build
+#   inputs:
+#     command: build
+#     projects: './12142020_MvcRpsDemo/12142020_MvcRpsDemo.sln'
+#     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   inputs:
