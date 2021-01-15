@@ -10,14 +10,6 @@ variables:
   buildPlatform: 'any cpu'
 
 steps:
-# - task: UseDotNet@2
-#   displayName: 'Install .NET Core SDK'
-#   inputs:
-#     version: 5.0.x
-#     performMultiLevelLookup: true
-#     includePreviewVersions: true
-    # Required for preview versions
-
 - task: SonarCloudPrepare@1
   displayName: 'Prepare SonarCloud Analysis'
   inputs:
@@ -26,8 +18,8 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'bab7310717959427ff06cf0768ff6f93fb0c21d2'
     projectName: '12142020PipeLineDemo'
-    extraProperties: |
-        sonar.exclusions=**/lib/**
+    # extraProperties: |
+    #     sonar.exclusions=**/lib/**
 
 - script: dotnet build ./12142020_MvcRpsDemo/12142020_MvcRpsDemo.sln --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
@@ -54,7 +46,7 @@ steps:
     pollingTimeoutSec: '300'
 
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet publish and zip'
+  displayName: 'app publish and zip'
   inputs:
     command: 'publish'
     publishWebProjects: true
