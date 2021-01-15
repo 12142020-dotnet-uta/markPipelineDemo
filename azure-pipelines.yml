@@ -29,12 +29,15 @@ steps:
 #     feedsToUse: 'select'
 #     vstsFeed: 'my-vsts-feed' # A series of numbers and letters
 
+
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: build
     projects: '**/*.sln'
     arguments: '--configuration $(buildConfiguration)' # Update this to match your need
+
+- task: SonarCloudAnalyze@1
 
 # do this after other tasks such as building
 - task: DotNetCoreCLI@2
