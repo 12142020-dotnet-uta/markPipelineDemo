@@ -17,7 +17,7 @@ namespace RepositoryLayer
 		{
 			if (!options.IsConfigured)
 			{
-				options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=RpsGame12142020;Trusted_Connection=True;");
+				options.UseSqlServer("Server=tcp:myshopazuredbserver.database.windows.net,1433;Initial Catalog=MyShopAzure;Persist Security Info=False;User ID=markcmoore;Password=cU5tod33qUal;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 			}
 		}
 	}
