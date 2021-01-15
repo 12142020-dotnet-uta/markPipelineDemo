@@ -11,17 +11,19 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  buildPlatform: 'any cpu'
 
 steps:
-- task: UseDotNet@2
-  displayName: 'Install .NET Core SDK'
-  inputs:
-    version: 5.0.x
-    performMultiLevelLookup: true
-    includePreviewVersions: true
+# - task: UseDotNet@2
+#   displayName: 'Install .NET Core SDK'
+#   inputs:
+#     version: 5.0.x
+#     performMultiLevelLookup: true
+#     includePreviewVersions: true
     # Required for preview versions
 
 - task: SonarCloudPrepare@1
+  displayName: 'Prepare SonarCloud Analysis'
   inputs:
     SonarCloud: 'batch12142020'
     organization: 'batch12142020'
@@ -31,15 +33,42 @@ steps:
     extraProperties: |
         sonar.exclusions=**/lib/**
 
-- script: dotnet build ./12142020_MvcRpsDemo --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet test
+# - script: dotnet build ./12142020_MvcRpsDemo/12142020_MvcRpsDemo.sln --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+#below is from MS Docs
+# - task: VSBuild@1
+#   displayName: 'Build solution **\*.sln'
+#   inputs:
+#     solution: './12142020_MvcRpsDemo/12142020_MvcRpsDemo.sln'
+#     platform: '$(BuildPlatform)'
+#     configuration: '$(BuildConfiguration)'
+
+- task: VSBuild@1
   inputs:
-    command: 'test'
-    projects: './12142020_MvcRpsDemo.Tests/12142020_MvcRpsDemo.Tests.csproj'
-    arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
+    solution: '**\*.sln'
+    vsVersion: '16.0'
+    msbuildArgs: '--configuration $(buildConfiguration)'
+    restoreNugetPackages: true
+
+# - task: DotNetCoreCLI@2
+#   displayName: dotnet test
+#   inputs:
+#     command: 'test'
+#     projects: './12142020_MvcRpsDemo.Tests/12142020_MvcRpsDemo.Tests.csproj'
+#     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
+
+- task: VSTest@2
+  displayName: 'Testing with VSTest@2'
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*Tests*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    codeCoverageEnabled: true
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
 
 - task: PublishCodeCoverageResults@1
   displayName: publish code coverage
