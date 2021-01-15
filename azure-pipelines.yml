@@ -20,46 +20,46 @@ steps:
 #     version: '5.0.x'
 #     performMultiLevelLookup: true
 
-- script: dotnet build ./12142020_MvcRpsDemo --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+# - script: dotnet build ./12142020_MvcRpsDemo --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+# # - task: DotNetCoreCLI@2
+# #   displayName: Build
+# #   inputs:
+# #     command: build
+# #     projects: './12142020_MvcRpsDemo/12142020_MvcRpsDemo.sln'
+# #     arguments: '--configuration $(buildConfiguration)'
+
 # - task: DotNetCoreCLI@2
-#   displayName: Build
 #   inputs:
-#     command: build
-#     projects: './12142020_MvcRpsDemo/12142020_MvcRpsDemo.sln'
-#     arguments: '--configuration $(buildConfiguration)'
+#     command: test
+#     projects: './12142020_MvcRpsDemo.Tests/12142020_MvcRpsDemo.Tests.csproj'
+#     arguments: --configuration $(buildConfiguration)' --collect "Code Coverage"
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: './12142020_MvcRpsDemo.Tests/12142020_MvcRpsDemo.Tests.csproj'
-    arguments: --configuration $(buildConfiguration)' --collect "Code Coverage"
+# - task: SonarCloudPrepare@1
+#   inputs:
+#     SonarCloud: 'batch12142020'
+#     organization: 'batch12142020'
+#     scannerMode: 'MSBuild'
+#     projectKey: 'batch12142020_12142020PipeLineDemo'
+#     projectName: '12142020PipeLineDemo'
 
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'batch12142020'
-    organization: 'batch12142020'
-    scannerMode: 'MSBuild'
-    projectKey: 'batch12142020_12142020PipeLineDemo'
-    projectName: '12142020PipeLineDemo'
+# - task: PublishCodeCoverageResults@1
+#   inputs:
+#     codeCoverageTool: 'Cobertura'
+#     summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
 
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
+# - task: SonarCloudAnalyze@1
+#   displayName: run code analysis
 
-- task: SonarCloudAnalyze@1
-  displayName: run code analysis
+# - task: SonarCloudPublish@1
+#   displayName: publish code analysis
 
-- task: SonarCloudPublish@1
-  displayName: publish code analysis
-
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet publish and zip'
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    zipAfterPublish: true
+# - task: DotNetCoreCLI@2
+#   displayName: 'dotnet publish and zip'
+#   inputs:
+#     command: 'publish'
+#     publishWebProjects: true
+#     zipAfterPublish: true
 
 
 
@@ -69,7 +69,7 @@ steps:
 
 
 
-
+########################################################
 
 # - task: SonarCloudPrepare@1
 #   inputs:
@@ -88,9 +88,36 @@ steps:
 #     testRunner: VSTest
 #     testResultsFiles: '**/*.trx'
 
+########################################################
 
+- script: dotnet build ./12142020_MvcRpsDemo --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  displayName: dotnet test
+  inputs:
+    command: 'test'
+    projects: './12142020_MvcRpsDemo.Tests/12142020_MvcRpsDemo.Tests.csproj'
+    arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
 
+- task: PublishCodeCoverageResults@1
+  displayName: publish code coverage
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
+
+- task: SonarCloudAnalyze@1
+  displayName: run code analysis
+  
+- task: SonarCloudPublish@1
+  displayName: publish code analysis
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet publish and zip'
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    zipAfterPublish: true
 
 
 
