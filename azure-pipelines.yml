@@ -43,11 +43,38 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
   
+# do this after your tests have run
+- script: dotnet test ./12142020_MvcRpsDemo.sln --logger trx
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
 
+# do this after other tasks such as building
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
 
+- task: SonarCloudAnalyze@1
+  displayName: run code analysis
+  
+- task: SonarCloudPublish@1
+  displayName: publish code analysis
 
-
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet publish and zip'
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    zipAfterPublish: true
 
 
 
