@@ -18,8 +18,8 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'bab7310717959427ff06cf0768ff6f93fb0c21d2'
     projectName: '12142020PipeLineDemo'
-    # extraProperties: |
-    #     sonar.exclusions=**/lib/**
+    extraProperties: |
+        sonar.exclusions=**/lib/**
 
 - script: dotnet build ./12142020_MvcRpsDemo/12142020_MvcRpsDemo.sln --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
