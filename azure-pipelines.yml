@@ -39,12 +39,11 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
 
-
-
 - task: SonarCloudAnalyze@1
   displayName: run code analysis
 
 - task: SonarCloudPublish@1
+  displayName: run publish sonarCloud
   inputs:
     pollingTimeoutSec: '300'
 
