@@ -12,6 +12,7 @@ namespace BusinessLogicLayer
 		Random randomNumber = new Random((int)DateTime.Now.Millisecond); // create a random number object
 		private readonly Repository _repository;
 		private readonly MapperClass _mapperClass;
+		public BusinessLogicClass() { }
 		public BusinessLogicClass(Repository repository, MapperClass mapperClass)
 		{
 			_repository = repository;
@@ -212,10 +213,13 @@ namespace BusinessLogicLayer
 		/// Takes a completed Game and finalizes it. 
 		/// Then the Game is saved to the DataBase.
 		/// </summary>
-		public void SaveGame()
+		public int SaveGame(int x)
 		{
 			//call UpdateWinLossRecords(match)
-
+			int y = 0;
+			y += x;
+			x = x * x;
+			return x;
 			// Convert the MatchViewModel into a Match
 
 			//save teh Match to the Db.
