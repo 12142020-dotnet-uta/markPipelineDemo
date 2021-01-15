@@ -45,12 +45,6 @@ steps:
     projects: './12142020_MvcRpsDemo.Tests/12142020_MvcRpsDemo.Tests.csproj'
     arguments: --configuration $(buildConfiguration)' --collect "Code Coverage"
 
-
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
-
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'batch12142020'
@@ -58,6 +52,13 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'batch12142020_12142020PipeLineDemo'
     projectName: '12142020PipeLineDemo'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
+
+
 
 - task: SonarCloudAnalyze@1
   displayName: run code analysis
