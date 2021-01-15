@@ -114,11 +114,13 @@ steps:
     projectKey: 'batch12142020_12142020PipeLineDemo'
     projectName: '12142020PipeLineDemo'
 
+
 - task: SonarCloudAnalyze@1
   displayName: run code analysis
-  
+
 - task: SonarCloudPublish@1
-  displayName: publish code analysis
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet publish and zip'
