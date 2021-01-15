@@ -63,18 +63,18 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
 
-- task: SonarCloudAnalyze@1
-  displayName: run code analysis
+# - task: SonarCloudAnalyze@1
+#   displayName: run code analysis
   
-- task: SonarCloudPublish@1
-  displayName: publish code analysis
+# - task: SonarCloudPublish@1
+#   displayName: publish code analysis
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet publish and zip'
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    zipAfterPublish: true
+# - task: DotNetCoreCLI@2
+#   displayName: 'dotnet publish and zip'
+#   inputs:
+#     command: 'publish'
+#     publishWebProjects: true
+#     zipAfterPublish: true
 
 
 
