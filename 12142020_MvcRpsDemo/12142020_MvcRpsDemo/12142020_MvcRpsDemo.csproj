@@ -6,11 +6,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
-	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -19,13 +19,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="wwwroot\RpsImages\" />
+		<Folder Include="wwwroot\RpsImages\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="wwwroot\RpsImages\Paper.jpg" />
-	  <None Include="wwwroot\RpsImages\Rock.jpg" />
-	  <None Include="wwwroot\RpsImages\Scissors.jpeg" />
+		<None Include="wwwroot\RpsImages\Paper.jpg" />
+		<None Include="wwwroot\RpsImages\Rock.jpg" />
+		<None Include="wwwroot\RpsImages\Scissors.jpeg" />
 	</ItemGroup>
 
 </Project>
